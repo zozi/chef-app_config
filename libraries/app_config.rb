@@ -13,16 +13,18 @@ class Chef
       # options - The Hash options lets you override the default search:
       #   :app_name    - The application name (default: node["app_config"]["app_name"])
       #   :environment - The application environment (default: node["app_config"]["environment"])
+      #   :cluster     - The application environment (default: node["app_config"]["cluster"])
       #   :data_bag    - The data bag to search (default: node["app_config"]["data_bag"])
       #
       # Returns a Mash.
       def app_config(options = {})
         app_name = fetch_option_or_raise(options, :app_name)
         environment = fetch_option_or_raise(options, :environment)
+        cluster = fetch_option_or_raise(options, :cluster)
         data_bag = fetch_option_or_raise(options, :data_bag)
 
         Mash.new.tap do |config|
-          [node["app_config"]["default_environment"], environment].compact.each do |env|
+          [node["app_config"]["default_environment"], environment, cluster].compact.each do |env|
             Chef::Mixin::DeepMerge.deep_merge!(
               data_bag_item(data_bag, app_name)[env],
               config

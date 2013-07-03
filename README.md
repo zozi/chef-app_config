@@ -15,6 +15,7 @@ Load the `app_config` helper.
 * `node["app_config"]["app_name"]` - The default application name used for lookups.
 * `node["app_config"]["environment"]` - The node's application environment used for lookups. Defaults to `default`.
 * `node["app_config"]["role"]` - The node's application role. Examples: `app`, `load`, `db`.
+* `node["app_config"]["cluster"]` - The unique name for the group of servers this node is apart of. Examples: `ec2-foobar-production`, `vagrant-foobar-staging`.
 
 ### Optional
 
@@ -41,6 +42,9 @@ Create two data bags:
       "name": "staging",
       "username": "staging"
     }
+  },
+  "ec2-staging": {
+    "subdomain": "ec2-staging"
   }
 }
 ```
@@ -63,6 +67,7 @@ Set some defaults for `app_config`
 ```ruby
 default["app_config"]["app_name"] = "zozi"
 default["app_config"]["environment"] = "staging"
+default["app_config"]["cluster"] = "ec2-staging"
 ```
 
 Now you can do the following in your recipes:
@@ -80,11 +85,12 @@ app_config
     "name" => "staging",
     "username" => "staging",
     "password" => "donttouchmydatabaseorelse!"
-  }
+  },
+  "subdomain" => "ec2-staging"
 }
 
 # or override the lookup params
 app_config(:app_name => "new_app")
 app_config(:app_name => "another_app", :environment => "production")
-app_config(:data_bag => "more_app_config")
+app_config(:data_bag => "more_app_config", :cluster => "ec2-production")
 ```
