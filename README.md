@@ -10,9 +10,15 @@ Load the `app_config` helper.
 
 ## Attributes
 
-* `node["app_config"]["default_environment"]` - The default environment that is merged in to every `app_config` calls output. Defaults to `default`.
+### Required
+
 * `node["app_config"]["app_name"]` - The default application name used for lookups.
-* `node["app_config"]["environment"]` - The default application environment used for lookups. Defaults to `default`.
+* `node["app_config"]["environment"]` - The node's application environment used for lookups. Defaults to `default`.
+* `node["app_config"]["role"]` - The node's application role. Examples: `app`, `load`, `db`.
+
+### Optional
+
+* `node["app_config"]["default_environment"]` - The default environment that is merged in to every `app_config` call's output. Defaults to `default`.
 * `node["app_config"]["data_bag"]` - The default data bag used for lookups. Defaults to `app_config`.
 
 ## Usage
