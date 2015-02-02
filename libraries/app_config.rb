@@ -29,8 +29,14 @@ class Chef
               data_bag_item(data_bag, app_name)[env],
               config
             )
+
             Chef::Mixin::DeepMerge.deep_merge!(
               Chef::EncryptedDataBagItem.load(data_bag, "#{app_name}_secrets")[env],
+              config
+            )
+
+            Chef::Mixin::DeepMerge.deep_merge!(
+              node["app_config"]["override"].to_hash,
               config
             )
           end

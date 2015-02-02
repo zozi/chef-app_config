@@ -56,6 +56,7 @@ Create two data bags:
   "id": "zozi_secrets",
   "staging": {
     "database": {
+      "username": "secret_user",
       "password": "donttouchmydatabaseorelse!"
     }
   }
@@ -68,6 +69,11 @@ Set some defaults for `app_config`
 default["app_config"]["app_name"] = "zozi"
 default["app_config"]["environment"] = "staging"
 default["app_config"]["cluster"] = "ec2-staging"
+default["app_config"]["override"] = {
+  "database" => {
+    "username" => "override_user"
+  }
+}
 ```
 
 Now you can do the following in your recipes:
@@ -83,7 +89,7 @@ app_config
   "database" => {
     "adapter" => "mysql2",
     "name" => "staging",
-    "username" => "staging",
+    "username" => "override_user",
     "password" => "donttouchmydatabaseorelse!"
   },
   "subdomain" => "ec2-staging"
