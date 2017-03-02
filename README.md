@@ -21,6 +21,7 @@ Load the `app_config` helper.
 
 * `node["app_config"]["default_environment"]` - The default environment that is merged in to every `app_config` call's output. Defaults to `default`.
 * `node["app_config"]["data_bag"]` - The default data bag used for lookups. Defaults to `app_config`.
+* `node["app_config"]["override"]` - A hash of data that overrides all values from data bags.
 
 ## Usage
 
